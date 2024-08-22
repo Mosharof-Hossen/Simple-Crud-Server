@@ -44,7 +44,21 @@ async function run() {
             const id = req.params.id;
             const query = {_id : new ObjectId(id)};
             const result = await userCollection.findOne(query);
-            console.log(result);
+            res.send(result)
+        })
+
+        app.put("/users/:id", async(req,res)=>{
+            const id = req.params.id;
+            const data = req.body;
+            console.log(id,data);
+            const filter = {_id : new ObjectId(id)};
+            const updatedUser = {
+                $set:{
+                    name: data.name,
+                    email:data.email
+                }
+            }
+            const result = await userCollection.updateOne(filter,updatedUser);
             res.send(result)
         })
 
